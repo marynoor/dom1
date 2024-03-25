@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #ffe6f2; /* Light pink background */
+            margin: 0;
+            padding: 20px;
+        }
+
+        header {
+            background-color: #f7f7f7; /* Pink header background */
+            padding: 10px 20px;
+            text-align: center;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        header img {
+            width: 120px; 
+            height: 120px; 
+        }
+
+        header h1 {
+            font-size: 24px;
+            color: #ff65d6; 
+            margin: 0;
+        }
+
+        #cart {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            border: 1px solid #ff80bf; /* Pink border */
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .item {
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid #ffd9e6; /* Light pink border bottom */
+            padding-bottom: 10px;
+            margin-bottom: 10px;
+        }
+
+        img.product-img {
+            width: 80px;
+            height: 80px;
+            margin-right: 10px;
+            border-radius: 5px;
+        }
+
+        .description {
+            flex: 1;
+            font-size: 14px;
+        }
+
+        .quantity-btn, .delete-btn, .like-btn {
+            background-color: #ff80bf; /* Pink buttons */
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 3px;
+            cursor: pointer;
+            margin-left: 10px;
+            transition: background-color 0.3s;
+        }
+
+        .quantity-btn:hover, .delete-btn:hover, .like-btn:hover {
+            background-color: #ff66a3; /* Lighter pink on hover */
+        }
+
+        .delete-btn {
+            background-color: #ff4d94; /* Darker pink for delete button */
+        }
+
+        #total-price {
+            font-weight: bold;
+            font-size: 18px;
+            margin-top: 10px;
+            color: #ff1a75; /* Pinkish text color for total price */
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <img src="logo1.jpg" alt="Logo">
+        <h1>Shopping Cart</h1>
+    </header>
+
+    <div id="cart">
+        <div class="item" data-price="5">
+            <span><img class="product-img" src="prod1.jpg" alt="Item 1"></span>
+            <div class="description">
+                <h3>Lip Balm</h3>
+                <p>This is a lovely product, perfect for your daily skincare routine.</p>
+            </div>
+            <button class="quantity-btn" onclick="changeQuantity(this, 'increase')">+</button>
+            <span class="quantity">0</span>
+            <button class="quantity-btn" onclick="changeQuantity(this, 'decrease')">-</button>
+            <button class="delete-btn" onclick="deleteItem(this)">Delete</button>
+        </div>
+        <div class="item" data-price="10">
+            <span><img class="product-img" src="prod.jpg" alt="Item 2"></span>
+            <div class="description">
+                <h3>Cream</h3>
+                <p>This amazing product will make you feel like a princess.</p>
+            </div>
+            <button class="quantity-btn" onclick="changeQuantity(this, 'increase')">+</button>
+            <span class="quantity">0</span>
+            <button class="quantity-btn" onclick="changeQuantity(this, 'decrease')">-</button>
+            <button class="delete-btn" onclick="deleteItem(this)">Delete</button>
+        </div>
+        <div>Total Price: <span id="total-price">$0.00</span></div>
+    </div>
+
+    <script>
+        function changeQuantity(btn, action) {
+            var quantityElement = btn.parentElement.querySelector('.quantity');
+            var quantity = parseInt(quantityElement.textContent);
+            if (action === 'increase') {
+                quantity++;
+            } else if (action === 'decrease' && quantity > 0) {
+                quantity--;
+            }
+            quantityElement.textContent = quantity;
+            calculateTotalPrice();
+        }
+
+        // Function to delete item
+        function deleteItem(btn) {
+            var item = btn.parentElement;
+            var price = parseFloat(item.dataset.price);
+            item.remove();
+            calculateTotalPrice(-price); // Pass the negative price to subtract from the total
+        }
+
+        // Function to calculate total price
+        function calculateTotalPrice(delta = 0) {
+            var items = document.querySelectorAll('.item');
+            var totalPrice = 0;
+            items.forEach(function(item) {
+                var quantity = parseInt(item.querySelector('.quantity').textContent);
+                var price = parseFloat(item.dataset.price);
+                totalPrice += quantity * price;
+            });
+            totalPrice += delta; 
+            document.getElementById('total-price').textContent = '$' + totalPrice.toFixed(2);
+        }
+    </script>
+</body>
+</html>
