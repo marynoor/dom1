@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div {
+           text-align: center;
+           height: 300px;
+            width: 300px;
+            margin:auto ;
+            border: 2px solid;
+
+        }
+        button{
+            margin-left: 550px;
+        }
+        h1{
+            text-align: center;
+
+        }
+        button {
+    display: block;
+    margin: 0 auto;
+}
+    </style>
+</head>
+<body>
+    <h1>change-color-btn</h1>
+    <div id="color-box"></div>
+    <button type="change-color-btn" onclick="getRandomColor()">Set background color</button>
+
+    <script>
+        function getRandomColor() {
+            var d1 = document.getElementById("color-box");
+            var randomColor = '#' + Math.floor(Math.random() * 16777215).toString(16); 
+            d1.style.backgroundColor = randomColor;
+        }
+    </script>
+</body>
+</html>
+# dom2
